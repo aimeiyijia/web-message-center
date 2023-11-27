@@ -1,6 +1,6 @@
-import { attach } from "./lib";
-import { MessageCenter } from "./messageCenter";
+import { attach } from "./core";
+import { MessageCenter } from "./core/message-center";
 
 attach();
 
-export = MessageCenter;
+export default MessageCenter;

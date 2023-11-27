@@ -1,18 +1,19 @@
-const webpack = require('webpack');
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const nodeEnv = process.env.NODE_ENV || 'development';
-const isProd = nodeEnv === 'production';
+const webpack = require("webpack")
+const path = require("path")
+const TerserPlugin = require("terser-webpack-plugin")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const nodeEnv = process.env.NODE_ENV || "development"
+const isProd = nodeEnv === "production"
 
 const plugins = [
   new webpack.DefinePlugin({
-    'process.env': {
+    "process.env": {
       NODE_ENV: JSON.stringify(nodeEnv)
     }
   }),
   new HtmlWebpackPlugin({
-    title: 'Typescript Webpack Starter',
-    template: '!!ejs-loader!public/index.html'
+    title: "message-center",
+    template: "!!ejs-loader!public/index.html"
   }),
   new webpack.LoaderOptionsPlugin({
     options: {
@@ -22,50 +23,79 @@ const plugins = [
       }
     }
   })
-];
+]
 
-var config = {
-  devtool: isProd ? 'hidden-source-map' : 'source-map',
-  context: path.resolve('./src'),
+var commonConfig = {
+  devtool: isProd ? "hidden-source-map" : "source-map",
+  context: path.resolve("./src"),
   entry: {
-    app: './index.ts'
-  },
-  output: {
-    path: path.resolve('./dist'),
-    filename: '[name].bundle.js'
+    "message-center": "./index.ts"
   },
   module: {
     rules: [
       {
-        enforce: 'pre',
+        enforce: "pre",
         test: /\.tsx?$/,
         exclude: [/\/node_modules\//],
-        use: ['awesome-typescript-loader', 'source-map-loader']
+        use: ["awesome-typescript-loader", "source-map-loader"]
       },
       !isProd
         ? {
             test: /\.(js|ts)$/,
-            loader: 'istanbul-instrumenter-loader',
+            loader: "istanbul-instrumenter-loader",
             exclude: [/\/node_modules\//],
             query: {
               esModules: true
             }
           }
         : null,
-      { test: /\.html$/, loader: 'html-loader' },
-      { test: /\.css$/, loaders: ['style-loader', 'css-loader'] }
+      { test: /\.html$/, loader: "html-loader" },
+      { test: /\.css$/, loaders: ["style-loader", "css-loader"] }
     ].filter(Boolean)
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: [".ts", ".js"]
   },
   plugins: plugins,
   devServer: {
-    contentBase: path.join(__dirname, 'dist/'),
+    contentBase: path.join(__dirname, "dist/"),
     compress: true,
     port: 3000,
     hot: true
   }
-};
+}
+var umdConfig = {
+  output: {
+    path: path.resolve("./dist"),
+    filename: "[name].js",
+    library: {
+      root: "MessageCenter",
+      amd: "message-center"
+    },
+    libraryTarget: "umd",
+    libraryExport: "default"
+  },
+  optimization: {
+    minimize: false
+  },
+  ...commonConfig
+}
+var miniUmdConfig = {
+  output: {
+    path: path.resolve("./dist"),
+    filename: "[name].mini.js",
+    library: {
+      root: "MessageCenter",
+      amd: "message-center"
+    },
+    libraryTarget: "umd",
+    libraryExport: "default"
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()]
+  },
+  ...commonConfig
+}
 
-module.exports = config;
+module.exports = [miniUmdConfig, umdConfig]

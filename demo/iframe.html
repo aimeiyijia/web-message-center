@@ -5,21 +5,12 @@
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>
-    <%= htmlWebpackPlugin.options.title %>
-  </title>
-
-  <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
-
 </head>
 
 <body>
-  <div> You have successfully started your Typescript application using Webpack. Open your console to see your printed
-    message from the index.ts file </div>
-  <p>By <a href="https://twitter.com/renaudin_yann">@renaudin_yann</a> </p>
-  <iframe src="./iframe.html"></iframe>
+  我是子页面
 </body>
+<script src="../dist/main.mini.js"></script>
 <script>
   //   type Options = {
   //   origin?: string, // default: "*"
@@ -28,9 +19,14 @@
   //   targetFrames?: <HTMLFrameElement | Window>[], // by default, all frames available to broadcast to
   // };
   const bus = new MessageCenter()
-  bus.on('message', (e) => {
-    console.log('接受到了消息：', e)
-  })
+  setInterval(() => {
+    bus.emit("message", {
+      from: "childIframe",
+      contents: "我是子iframe",
+      time: new Date().getSeconds()
+    });
+    console.log('发消息')
+  }, 3000)
 
 </script>
 

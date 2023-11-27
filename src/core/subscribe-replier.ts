@@ -1,4 +1,4 @@
-import { MessageCenter } from "../messageCenter"
+import { MessageCenter } from "./message-center"
 import { generateUUID } from "../utils/uuid"
 
 import type { MessageCenterSubscriberArg, MessageCenterSubscribeHandler } from "."

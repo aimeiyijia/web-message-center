@@ -6,14 +6,14 @@ import {
   sendMessage,
   childWindows,
   subscribers,
-} from "./lib";
+} from ".";
 
 import type {
   MessageCenterSubscriberArg,
   MessageCenterSubscribeHandler,
   MessageCenterOnHandler,
   MessageCenterReplyHandler,
-} from "./lib";
+} from ".";
 
 type Listener = {
   eventName: string;

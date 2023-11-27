@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+
+  <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
+
+</head>
+
+<body>
+  父页面
+  <div id="parentPage"></div>
+  <iframe src="./iframe.html"></iframe>
+  <script src="../dist/main.mini.js"></script>
+  <script>
+    //   type Options = {
+    //   origin?: string, // default: "*"
+    //   channel?: string, // no default
+    //   verifyDomain?: (url: string) => boolean, // no default
+    //   targetFrames?: <HTMLFrameElement | Window>[], // by default, all frames available to broadcast to
+    // };
+    const bus = new MessageCenter()
+    bus.on('message', (e) => {
+      console.log('接受到了消息：', e)
+      const el = document.querySelector('#parentPage')
+      el.textContent = JSON.stringify(e)
+    })
+
+  </script>
+</body>
+
+
+</html>
