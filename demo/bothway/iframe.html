@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  我是子页面
+  <div>收到了回复消息：</div>
+  <div id="content" style="color: red"></div>
+</body>
+<script src="../../dist/web-message-center.js"></script>
+<script>
+  const bus = new WebMessageCenter()
+  setInterval(() => {
+    // 消息体内容是自定义的，但必须是能被JSON.stringify序列化的类型
+    const fn = (e) => {
+      console.log(e, '回复消息')
+      const el = document.querySelector('#content')
+      el.textContent = e + new Date().getTime()
+    }
+    bus.emit("message", {
+      from: "childIframe",
+      contents: "我是子iframe",
+      time: new Date().getTime()
+    }, fn);
+
+    console.log('发送了一次消息')
+  }, 2000)
+
+</script>
+
+</html>

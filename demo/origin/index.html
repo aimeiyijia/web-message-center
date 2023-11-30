@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>
+    基础通信
+  </title>
+</head>
+
+<body>
+  父页面：
+  <div id="content"></div>
+  <script src="../../dist/web-message-center.js"></script>
+  <script>
+    const bus = new WebMessageCenter()
+    const fn = (e, fn) => {
+      console.log('接受到了消息：', e)
+      const el = document.querySelector('#content')
+      el.textContent = JSON.stringify(e)
+    }
+    // bus.on('message', fn)
+    bus.target({
+      origin: 'http://127.0.0.1:5500'
+    }).on('message', fn)
+    bus.target({
+      origin: 'http://127.0.0.1:8080'
+    }).on('message', (e) => {
+      console.log('接受到了消息：', e)
+      const el = document.querySelector('#content')
+      el.textContent = JSON.stringify(e) + 'target'
+    })
+
+    window.open('http://127.0.0.1:8080/iframe.html')
+
+  </script>
+</body>
+
+
+</html>
