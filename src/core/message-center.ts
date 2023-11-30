@@ -263,14 +263,14 @@ export class MessageCenter {
       return;
     }
 
-    this.isDestroyed = true;
-
     for (let i = 0; i < this.listeners.length; i++) {
       const listener = this.listeners[i];
-      this.off(listener.eventName, listener.handler);
+      console.log(listener, 'listener---')
+      console.log(this.off(listener.eventName, listener.handler));
     }
 
     this.listeners.length = 0;
+    this.isDestroyed = true;
   }
 
   private passesVerifyDomainCheck(origin: string): boolean {
@@ -349,7 +349,8 @@ export class MessageCenter {
   }
 
   private namespaceEvent(eventName: string): string {
-    if (!this.channel) {
+    // If eventName is already a channel, do not add it again
+    if (!this.channel || eventName.includes(this.channel)) {
       return eventName;
     }
 
