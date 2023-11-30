@@ -29,7 +29,7 @@ var commonConfig = {
   devtool: isProd ? "hidden-source-map" : "source-map",
   context: path.resolve("./src"),
   entry: {
-    "message-center": "./index.ts"
+    "web-message-center": "./index.ts"
   },
   module: {
     rules: [
@@ -69,8 +69,8 @@ var umdConfig = {
     path: path.resolve("./dist"),
     filename: "[name].js",
     library: {
-      root: "MessageCenter",
-      amd: "message-center"
+      root: "WebMessageCenter",
+      amd: "web-message-center"
     },
     libraryTarget: "umd",
     libraryExport: "default"
@@ -85,8 +85,8 @@ var miniUmdConfig = {
     path: path.resolve("./dist"),
     filename: "[name].mini.js",
     library: {
-      root: "MessageCenter",
-      amd: "message-center"
+      root: "WebMessageCenter",
+      amd: "web-message-center"
     },
     libraryTarget: "umd",
     libraryExport: "default"

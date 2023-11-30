@@ -25,7 +25,7 @@ type VerifyDomainMethod = (domain: string) => boolean;
 // this is a mixed type so that users can add iframes to the array
 // before they have been added to the DOM (in which case, they
 // would not have a contentWindow yet). When accessing these
-// windows in MessageCenter, the targetFramesAsWindows private
+// windows in WebMessageCenter, the targetFramesAsWindows private
 // method should be used
 type IFrameOrWindowList = Array<HTMLIFrameElement | Window>;
 
@@ -39,7 +39,7 @@ type MessageCenterOptions = {
 const DefaultPromise = (typeof window !== "undefined" &&
   window.Promise) as typeof Promise;
 
-export class MessageCenter {
+export class WebMessageCenter {
   origin: string;
   channel: string;
   targetFrames: IFrameOrWindowList;
@@ -75,12 +75,12 @@ export class MessageCenter {
 
   static Promise = DefaultPromise;
 
-  static setPromise(PromiseGlobal: (typeof MessageCenter)["Promise"]): void {
-    MessageCenter.Promise = PromiseGlobal;
+  static setPromise(PromiseGlobal: (typeof WebMessageCenter)["Promise"]): void {
+    WebMessageCenter.Promise = PromiseGlobal;
   }
 
-  static target(options?: MessageCenterOptions): MessageCenter {
-    return new MessageCenter(options);
+  static target(options?: MessageCenterOptions): WebMessageCenter {
+    return new WebMessageCenter(options);
   }
 
   addTargetFrame(frame: Window | HTMLIFrameElement): void {
@@ -108,8 +108,8 @@ export class MessageCenter {
     return true;
   }
 
-  target(options?: MessageCenterOptions): MessageCenter {
-    return MessageCenter.target(options);
+  target(options?: MessageCenterOptions): WebMessageCenter {
+    return WebMessageCenter.target(options);
   }
 
   emit(
@@ -159,7 +159,7 @@ export class MessageCenter {
     eventName: string,
     data?: MessageCenterSubscriberArg
   ): Promise<T> {
-    return new MessageCenter.Promise((resolve, reject) => {
+    return new WebMessageCenter.Promise((resolve, reject) => {
       const didAttachListener = this.emit(eventName, data, (payload) => {
         resolve(payload as T);
       });

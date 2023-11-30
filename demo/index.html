@@ -17,8 +17,10 @@
 <body>
   父页面
   <div id="parentPage"></div>
+  <div id="parentPage1"></div>
   <iframe src="./iframe.html"></iframe>
-  <script src="../dist/main.mini.js"></script>
+  <!-- <iframe src="./iframe1.html"></iframe> -->
+  <script src="../dist/web-message-center.js"></script>
   <script>
     //   type Options = {
     //   origin?: string, // default: "*"
@@ -26,12 +28,32 @@
     //   verifyDomain?: (url: string) => boolean, // no default
     //   targetFrames?: <HTMLFrameElement | Window>[], // by default, all frames available to broadcast to
     // };
-    const bus = new MessageCenter()
-    bus.on('message', (e) => {
+    const bus = new WebMessageCenter({
+      channel: 89
+    })
+    const fn = (e, fn) => {
       console.log('接受到了消息：', e)
       const el = document.querySelector('#parentPage')
       el.textContent = JSON.stringify(e)
-    })
+
+      fn('我收到消息了')
+    }
+    bus.on('message', fn)
+    console.log(bus, 'bus')
+    // bus.off('message', fn)
+    // bus.teardown()
+    setTimeout(() => {
+      console.log('执行--')
+      bus.teardown()
+      // bus.off('message', (e) => {
+      //   console.log(e, '取消订阅')
+      // })
+    }, 4000)
+    // bus.on('message1', (e) => {
+    //   console.log('接受到了消息：', e)
+    //   const el = document.querySelector('#parentPage1')
+    //   el.textContent = JSON.stringify(e)
+    // })
 
   </script>
 </body>

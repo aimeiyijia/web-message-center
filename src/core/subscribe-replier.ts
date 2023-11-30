@@ -1,4 +1,4 @@
-import { MessageCenter } from "./message-center"
+import { WebMessageCenter } from "./web-message-center"
 import { generateUUID } from "../utils/uuid"
 
 import type { MessageCenterSubscriberArg, MessageCenterSubscribeHandler } from "."
@@ -14,12 +14,12 @@ export function subscribeReplier(
     replyOriginHandler: MessageCenterSubscribeHandler
   ): void {
     fn(data, replyOriginHandler)
-    MessageCenter.target({
+    WebMessageCenter.target({
       origin
     }).off(uuid, replier)
   }
 
-  MessageCenter.target({
+  WebMessageCenter.target({
     origin
   }).on(uuid, replier)
 

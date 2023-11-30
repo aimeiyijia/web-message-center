@@ -1,9 +1,9 @@
 {
-  "name": "message-center",
-  "version": "1.0.0",
-  "main": "dist/message-center.mini.js",
+  "name": "web-message-center",
+  "version": "0.0.1",
+  "main": "dist/web-message-center.mini.js",
   "author": "ame",
-  "description": "message-center",
+  "description": "web-message-center",
   "scripts": {
     "start": "npm run serve:dev",
     "serve": "npm run serve:dev",
@@ -37,6 +37,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aimeiyijia/message-center.git"
+    "url": "git+https://github.com/aimeiyijia/web-message-center.git"
   }
 }

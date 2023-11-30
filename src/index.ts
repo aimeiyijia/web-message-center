@@ -1,6 +1,6 @@
 import { attach } from "./core";
-import { MessageCenter } from "./core/message-center";
+import { WebMessageCenter } from "./core/web-message-center";
 
 attach();
 
-export default MessageCenter;
+export default WebMessageCenter;

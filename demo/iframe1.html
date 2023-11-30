@@ -8,27 +8,29 @@
 </head>
 
 <body>
-  我是子页面
+  我是第二个子页面
+
+  <div id="parentPage"></div>
 </body>
-<script src="../dist/web-message-center.js"></script>
+<script src="../dist/main.mini.js"></script>
 <script>
-  console.log(window.origin, 'window.origin')
   //   type Options = {
   //   origin?: string, // default: "*"
   //   channel?: string, // no default
   //   verifyDomain?: (url: string) => boolean, // no default
   //   targetFrames?: <HTMLFrameElement | Window>[], // by default, all frames available to broadcast to
   // };
-  const bus = new WebMessageCenter({
-    channel: 89
+  const bus = new WebMessageCenter()
+  bus.on('message', (e) => {
+    console.log('接受到了第一个iframe消息：', e)
+    const el = document.querySelector('#parentPage')
+    el.textContent = JSON.stringify(e)
   })
   setInterval(() => {
-    bus.emit("message", {
-      from: "childIframe",
-      contents: "我是子iframe",
-      time: new Date().getSeconds()
-    }, (e) => {
-      console.log(e, '-----')
+    bus.emit("message1", {
+      from: "childIframe1",
+      contents: "我是第二个子iframe",
+      time: new Date().getSeconds() + 1000
     });
     console.log('发消息')
   }, 2000)
