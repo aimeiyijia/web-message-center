@@ -1,6 +1,6 @@
 {
   "name": "web-message-center",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/web-message-center.mini.js",
   "author": "ame",
   "description": "web-message-center",
