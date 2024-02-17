@@ -8,7 +8,7 @@ web的消息中心插件
 
 ``` javascript
 在一个页面中引入
-import WebMessageCenter from("web-message-center")
+import WebMessageCenter from "web-message-center"
 const wmc = new WebMessageCenter();
 
 wmc.emit("message", {
@@ -18,7 +18,7 @@ wmc.emit("message", {
 
 
 在另外一个 iframe、页面中
-import WebMessageCenter from("web-message-center")
+import WebMessageCenter from "web-message-center"
 const wmc = new WebMessageCenter();
 
 wmc.on("message", function (data) {
